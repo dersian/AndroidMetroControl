@@ -64,21 +64,49 @@
         </ListView>
     </LinearLayout>
 
+
+
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="12dp"
-        android:src="@drawable/bottom_bar"
+        android:id="@+id/imageView"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle_dark"
         app:layout_constraintBottom_toBottomOf="@+id/linear2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.99" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="@+id/linear2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="@+id/linear2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+
+
     <Button
         android:id="@+id/snitchButton"
         android:layout_width="194dp"
         android:layout_height="75dp"
-        android:text="Snitch Here"
+        android:text="Report Control"
         android:textSize="20dp"
         android:textAllCaps="false"
 
