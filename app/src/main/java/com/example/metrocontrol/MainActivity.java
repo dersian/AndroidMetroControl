@@ -8,8 +8,8 @@ import android.widget.ListView;
 import com.example.controlmetro.R;
 
 public class MainActivity extends AppCompatActivity {
-    String lijst[] = {"Montgomery", "Robiano", "Meiser", "George Henri", "Simonis" };
-    int vehicleImages[] = {R.drawable.bus, R.drawable.tram, R.drawable.metro};
+    String[] lijst = {"Montgomery", "Robiano", "Meiser", "George Henri", "Simonis" };
+    int[] vehicleImages = {R.drawable.bus, R.drawable.tram, R.drawable.metro};
 
     ListView listView;
 

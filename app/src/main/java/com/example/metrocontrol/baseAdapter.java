@@ -13,8 +13,8 @@ import com.example.controlmetro.R;
 public class baseAdapter extends BaseAdapter {
 
     Context context;
-    String vehicleLijst[];
-    int listImages[];
+    String[] vehicleLijst;
+    int[] listImages;
     LayoutInflater inflater;
 
     public baseAdapter(Context ctx, String[] lijst, int[] images){

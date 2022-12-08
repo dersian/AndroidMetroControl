@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.controlmetro.R;
+
 public class trainItem extends AppCompatActivity {
 
     @Override
