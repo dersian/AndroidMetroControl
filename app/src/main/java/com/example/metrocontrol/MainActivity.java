@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     int[] vehicleImages = {R.drawable.bus, R.drawable.tram, R.drawable.metro};
 
     ListView listView;
+
+    float x1,y1,x2,y2;
 
 
     private Button callActivity;
@@ -39,14 +42,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     public void openReportControlActivity(){
         Intent intent = new Intent(this, ReportControlActivity.class);
         startActivity(intent);
+    }
+
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch(touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if(x1 <  x2){
+                    Intent i = new Intent(MainActivity.this, AllControlsActivity.class);
+                    startActivity(i);
+                }else if(x1 >  x2){
+                    Intent i = new Intent(MainActivity.this, ReportControlActivity.class);
+                    startActivity(i);
+                }
+                break;
+        }
+        return false;
     }
 }
 
