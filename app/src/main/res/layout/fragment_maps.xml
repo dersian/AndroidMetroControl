@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.metrocontrol.mapsFragment">
+
+    <LinearLayout
+        android:id="@+id/linearMaps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/GfG_full_logo"
+
+            app:srcCompat="@drawable/maps_placeholder"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+
+</FrameLayout>

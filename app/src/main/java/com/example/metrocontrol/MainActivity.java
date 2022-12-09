@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         baseAdapter adapterkke = new baseAdapter(getApplicationContext(), lijst, vehicleImages);  //generates the customizable listview
         listView.setAdapter(adapterkke);
 
+        getSupportFragmentManager().beginTransaction().add(R.id.mapsContainer, new mapsFragment()).commit();
+
         callActivity = (Button) findViewById(R.id.snitchButton);
         callActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 openReportControlActivity();
             }
         });
+
+
 
 
     }
