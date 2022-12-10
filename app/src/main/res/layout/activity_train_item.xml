@@ -4,16 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.metrocontrol.trainItem">
+    tools:context="com.example.metrocontrol.trainItem"
+    >
+
 
     <ImageView
+        android:id="@+id/listIcon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/listIcon"/>
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars"
+        />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_gravity="center"
-        android:text="My Text"/>
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:gravity="center"
+
+
+        android:text="Montgomery" />
+
+    <TextView
+        android:id="@+id/textDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:gravity="right"
+
+
+        android:text="500m" />
+
+
 </LinearLayout>

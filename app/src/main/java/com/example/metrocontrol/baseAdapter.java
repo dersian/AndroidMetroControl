@@ -15,12 +15,14 @@ public class baseAdapter extends BaseAdapter {
     Context context;
     String[] vehicleLijst;
     int[] listImages;
+    String[] distances;
     LayoutInflater inflater;
 
-    public baseAdapter(Context ctx, String[] lijst, int[] images){
+    public baseAdapter(Context ctx, String[] lijst, int[] images, String[] distance){
         this.context = ctx;
         this.vehicleLijst = lijst;
         this.listImages = images;
+        this.distances = distance;
         inflater = LayoutInflater.from(ctx);
     }
     @Override
@@ -44,8 +46,11 @@ public class baseAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.activity_train_item,  null);
         TextView txtView = (TextView) convertView.findViewById(R.id.textView);
         ImageView imgView = (ImageView) convertView.findViewById(R.id.listIcon);
+        TextView txtDistance = (TextView) convertView.findViewById(R.id.textDistance);
         txtView.setText(vehicleLijst[position]);
         imgView.setImageResource(listImages[0]);
+        txtDistance.setText(distances[0]);
+
         return convertView;
     }
 }

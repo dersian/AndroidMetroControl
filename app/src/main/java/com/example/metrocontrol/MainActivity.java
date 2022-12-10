@@ -14,6 +14,7 @@ import com.example.controlmetro.R;
 public class MainActivity extends AppCompatActivity {
     String[] lijst = {"Montgomery", "Robiano", "Meiser", "George Henri", "Louiza", "Tour & Taxi", "Fort-Jaco", "Hermann-Debroux"};
     int[] vehicleImages = {R.drawable.bus, R.drawable.tram, R.drawable.metro};
+    String[] distances = {"500m"};
 
     ListView listView;
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.NearbyList);
-        baseAdapter adapterkke = new baseAdapter(getApplicationContext(), lijst, vehicleImages);  //generates the customizable listview
+        baseAdapter adapterkke = new baseAdapter(getApplicationContext(), lijst, vehicleImages, distances);  //generates the customizable listview
         listView.setAdapter(adapterkke);
 
         getSupportFragmentManager().beginTransaction().add(R.id.mapsContainer, new mapsFragment()).commit();
