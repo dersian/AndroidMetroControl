@@ -15,4 +15,10 @@
 
     </style>
 
+    <style name="buttonTransparent" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorAccent">@color/transparent</item>
+        <item name="colorPrimary">@color/transparent</item>
+
+    </style>
+
 </resources>

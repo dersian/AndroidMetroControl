@@ -42,11 +42,27 @@ public class MainActivity extends AppCompatActivity {
                 openReportControlActivity();
             }
         });
-
+        callActivity = (Button) findViewById(R.id.goLeftButton);
+        callActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { openAllControlsActivity();}
+        });
+        callActivity = (Button) findViewById(R.id.goRightButton);
+        callActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openReportControlActivity();
+            }
+        });
     }
 
     public void openReportControlActivity(){
         Intent intent = new Intent(this, ReportControlActivity.class);
+        startActivity(intent);
+    }
+
+    public void openAllControlsActivity(){
+        Intent intent = new Intent(this, AllControlsActivity.class);
         startActivity(intent);
     }
 
