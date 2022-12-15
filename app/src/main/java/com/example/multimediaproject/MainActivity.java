@@ -83,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
     private final List<String> controlStationsCurrent = new ArrayList<>(); // list with the stations where a control is happening (current controls)
     private final List<String> controlStationsToCheck = new ArrayList<>(); // list with the nearby stations that have to be checked if there is a control -> see CONTROL_RADIUS
 
-    //--- Arrays ---//
-    private String[] autoCompleteStations; // array for the autocomplete feature
-
     //--- List Views and Adapters ---//
     private ListView stationDataListView;
     private StationDataAdapter stationDataAdapter;
@@ -170,6 +167,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Detect Returning from other activity to update the LV
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG, "On Resume");
+        updateLV();
+    }
+
     //--- Switch Activity Functions---//
     public void openReportControlActivity(){
         Intent intent = new Intent(this, ReportControlActivity.class);
@@ -250,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
                     currentLatitude = 50.837398;
                     // Check nearby stations everytime location is updated
                     updateStationDistance(location);
+                    // Update the controls
                 }
             });
         }
@@ -287,26 +293,29 @@ public class MainActivity extends AppCompatActivity {
         // Update station data list view every x times the location updates
         // Calling DB takes time -> every time the location updates is to fast
         if(locationUpdateCounter == 1){ // on startup
+            updateStationControls();
             updateLV();
         }
-        if (locationUpdateCounter % 10 == 0){
+        if (locationUpdateCounter % 4 == 0){
+            updateStationControls();
             updateLV();
         }
 
     }
 
     // Seperate function -> can be called when starting the app
-    private void updateLV(){
+    public void updateLV(){
         Log.d(TAG, "Updating List View...");
         //printStationDataList();
-
-        stationDataListView = (ListView) findViewById(R.id.LV_stationData);
-        stationDataAdapter = new StationDataAdapter(this, stationData, MainActivity.this);
-        // Disable the listview items that are not within the distance radius
-        for(int i = 0; i < stationData.size(); i++)
-            if(!(stationData.get(i).getDistance() < DISTANCE_RADIUS)){
-                stationDataAdapter.isEnabled(i);
+        // Create new temp nearby station data list to pass it to the adapter -> otherwise all the other stops that are not nearby are also shown
+        List<StationSample> nearbyStations = new ArrayList<>();
+        for (int i = 0; i < stationData.size(); i++){
+            if(stationData.get(i).getDistance() < DISTANCE_RADIUS){
+                nearbyStations.add(stationData.get(i));
             }
+        }
+        stationDataListView = (ListView) findViewById(R.id.LV_stationData);
+        stationDataAdapter = new StationDataAdapter(this, nearbyStations, MainActivity.this);
         stationDataListView.setAdapter(stationDataAdapter);
         stationDataAdapter.notifyDataSetChanged();
     }
@@ -374,13 +383,24 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-    // Create the drop down list from the stations in the CSV file
-    private void getStationStringList(){
-        for (int i = 0; i < stationData.size(); i++){
-            autoCompleteStations[i] = stationData.get(i).getStationName();
-        }
+    // Update the station data list with the database
+    private void updateStationControls(){
+        Log.d(TAG, "Updating Station Control Status...");
+        retrieveFromDatabase(new FirestoreCallback() {
+            @Override
+            public void onCallback(List<String> currentControlStations) {
+                for(int i = 0; i < stationData.size(); i++){
+                    if(currentControlStations.contains(stationData.get(i).getStationName())){
+                        stationData.get(i).setControl(true);
+                        Log.d(TAG, "Control Stations: " + stationData.get(i).getStationName());
+                    } else {
+                        stationData.get(i).setControl(false);
+                    }
+                }
+                updateLV();
+            }
+        });
     }
-
 
     // --- Debug Functions --- //
     private void printStationDataList(){
