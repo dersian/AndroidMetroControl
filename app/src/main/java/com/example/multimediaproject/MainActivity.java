@@ -77,24 +77,10 @@ public class MainActivity extends AppCompatActivity {
     public double currentLatitude;
 
     //--- Lists ---//
-    //private final ArrayList<CSVDataSample> CSVData = new ArrayList<>(); // list with the CSV stops data
     private final List<StationSample> stationData = new ArrayList<>(); // list with all the stations and their attributes
-    //private final List<StationSample> nearbyStations = new ArrayList<>(); // list with the nearby stations -> see DISTANCE_RADIUS
-    private final List<String> controlStationsCurrent = new ArrayList<>(); // list with the stations where a control is happening (current controls)
-    private final List<String> controlStationsToCheck = new ArrayList<>(); // list with the nearby stations that have to be checked if there is a control -> see CONTROL_RADIUS
-
     //--- List Views and Adapters ---//
     private ListView stationDataListView;
     private StationDataAdapter stationDataAdapter;
-
-    /*
-    // Current Controls
-    private ListView controlStationsListView;
-    private ControlStationsAdapter controlStationsAdapter;
-    // Controls To Check -> Pop Up Window
-    private ListView controlsToCheckListView;
-    private ControlStationsPopUpAdapter controlsToCheckAdapter;
-     */
 
     //--- Firestone database ---//
     public FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance(); // Firestore DB Instance
@@ -179,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
     public void openReportControlActivity(){
         Intent intent = new Intent(this, ReportControlActivity.class);
         startActivity(intent);
-        // SUBMIT BUTTON
     }
 
     public void openAllStationsActivity(){
@@ -251,11 +236,11 @@ public class MainActivity extends AppCompatActivity {
                     // Pass the current long and lat to corresponding vars
                     //currentLongitude = location.getLongitude();
                     //currentLatitude = location.getLatitude();
+                    // Test Locations:
                     currentLongitude = 4.407608;
                     currentLatitude = 50.837398;
                     // Check nearby stations everytime location is updated
                     updateStationDistance(location);
-                    // Update the controls
                 }
             });
         }
