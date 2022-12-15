@@ -1,4 +1,4 @@
-package com.example.metrocontrol;
+package com.example.multimediaproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import com.example.controlmetro.R;
 
-public class AllControlsActivity extends AppCompatActivity {
+public class ReportControlActivity extends AppCompatActivity {
     float x1,y1,x2,y2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_controls);
+        setContentView(R.layout.activity_report_control);
     }
+
 
     public boolean onTouchEvent(MotionEvent touchEvent){
         switch(touchEvent.getAction()){
@@ -26,8 +26,8 @@ public class AllControlsActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
-                if(x1 >  x2){
-                    Intent i = new Intent(AllControlsActivity.this, MainActivity.class);
+                if(x1 <  x2){
+                    Intent i = new Intent(ReportControlActivity.this, MainActivity.class);
                     startActivity(i);
                 }
                 break;

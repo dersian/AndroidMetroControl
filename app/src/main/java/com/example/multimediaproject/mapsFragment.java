@@ -1,4 +1,4 @@
-package com.example.metrocontrol;
+package com.example.multimediaproject;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.controlmetro.R;
 
 /**
  * A simple {@link Fragment} subclass.

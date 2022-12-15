@@ -1,16 +1,15 @@
-package com.example.metrocontrol;
+package com.example.multimediaproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.controlmetro.R;
 
-public class trainItem extends AppCompatActivity {
+public class StationDataListView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_train_item);
+        setContentView(R.layout.listview_stationsample);
     }
 }
