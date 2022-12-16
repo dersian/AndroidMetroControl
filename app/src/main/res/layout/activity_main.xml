@@ -5,21 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.multimediaproject.MainActivity">
-    <!--
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="412dp"
-            android:layout_height="397dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linear2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-
-        </LinearLayout>
--->
     <FrameLayout
         android:id="@+id/mapsContainer"
         android:layout_width="match_parent"
@@ -39,44 +25,29 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0">
 
-        <!--    <SearchView
-                android:id="@+id/halteZoek"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:queryHint="Search here"
-                />
--->
-
             <ListView
-
                 android:id="@+id/LV_stationData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:focusableInTouchMode="false">
+                </ListView>
 
-
-
-        </ListView>
         </LinearLayout>
 
     <Button
         android:id="@+id/btnGoLeft"
-
         android:layout_width="50dp"
         android:layout_height="40dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-
         android:theme="@style/buttonTransparent"
-        android:outlineProvider="none"
-
-        ></Button>
+        android:outlineProvider="none">
+    </Button>
 
     <Button
         android:id="@+id/btnGoRight"
@@ -92,44 +63,42 @@
         app:layout_constraintVertical_bias="1.0"
 
         android:theme="@style/buttonTransparent"
-        android:outlineProvider="none"
-        ></Button>
+        android:outlineProvider="none">
 
+    </Button>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
-            android:src="@drawable/circle_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/linear2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.99" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
-            android:src="@drawable/circle"
-            app:layout_constraintBottom_toBottomOf="@+id/linear2"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.99" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
-            android:src="@drawable/circle"
-            app:layout_constraintBottom_toBottomOf="@+id/linear2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.04"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.99" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/linear2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="@+id/linear2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="@+id/linear2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.99" />
 
 
     <Button
@@ -139,18 +108,13 @@
         android:onClick="nothing"
         android:text="Report Control"
         android:textAllCaps="false"
-
         android:textSize="20dp"
         app:cornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/mapsContainer"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@+id/mapsContainer"
         tools:ignore="OnClick" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

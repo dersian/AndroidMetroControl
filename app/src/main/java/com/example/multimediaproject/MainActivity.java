@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.core.app.ActivityCompat;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.Manifest;
@@ -30,6 +32,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,6 +46,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     //--- UI Elements ---//
     private Button btnCallActivity;
     float x1,y1,x2,y2;
+    MapsFragment mapsFragment;
 
     //--- Location ---//
     // Config file for all settings related to FusedLocationProviderContent
@@ -79,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
     //--- Lists ---//
     private final List<StationSample> stationData = new ArrayList<>(); // list with all the stations and their attributes
     //--- List Views and Adapters ---//
-    private ListView stationDataListView;
-    private StationDataAdapter stationDataAdapter;
+    private ListView mainStationDataListView;
+    private MainStationDataAdapter mainStationDataAdapter;
 
     //--- Firestone database ---//
     public FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance(); // Firestore DB Instance
@@ -94,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mapsFragment = new MapsFragment();
+
         // GMaps services check
-        //isServicesOK();
+        isServicesOK();
 
         //---Location---//
         // Set all properties of LocationRequest
@@ -124,9 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Stations Data List
         initStationData();
-
-        // GMaps in fragment
-        //getSupportFragmentManager().beginTransaction().add(R.id.mapsContainer, new mapsFragment()).commit();
 
         //--- UI Elements ---//
         btnCallActivity = (Button) findViewById(R.id.btnReportControl);
@@ -158,17 +162,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         Log.d(TAG, "On Resume");
-        updateLV();
+        updateMainLV();
     }
 
     //--- Switch Activity Functions---//
     public void openReportControlActivity(){
         Intent intent = new Intent(this, ReportControlActivity.class);
+        intent.putExtra("stationData", (Serializable) stationData); // pass station data to activity
         startActivity(intent);
     }
 
     public void openAllStationsActivity(){
-        Intent intent = new Intent(this, AllControlsActivity.class);
+        Intent intent = new Intent(this, AllStationsActivity.class);
+        intent.putExtra("stationData", (Serializable) stationData);
         startActivity(intent);
     }
 
@@ -183,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
                 if(x1 <  x2){
-                    Intent i = new Intent(MainActivity.this, AllControlsActivity.class);
+                    Intent i = new Intent(MainActivity.this, AllStationsActivity.class);
                     startActivity(i);
                 }else if(x1 >  x2){
                     Intent i = new Intent(MainActivity.this, ReportControlActivity.class);
@@ -237,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     //currentLongitude = location.getLongitude();
                     //currentLatitude = location.getLatitude();
                     // Test Locations:
-                    currentLongitude = 4.407608;
-                    currentLatitude = 50.837398;
+                    currentLongitude = 4.5028997;
+                    currentLatitude = 50.8228761;
                     // Check nearby stations everytime location is updated
                     updateStationDistance(location);
                 }
@@ -270,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     //--- UI Functions ---//
     // Update Station Data List View
     private void updateUI() {
@@ -278,19 +283,30 @@ public class MainActivity extends AppCompatActivity {
         // Update station data list view every x times the location updates
         // Calling DB takes time -> every time the location updates is to fast
         if(locationUpdateCounter == 1){ // on startup
+            // GMaps fragment
+            if(currentLatitude != 0.0 && currentLongitude != 0.0){
+                // First launch
+                Bundle bundle = new Bundle();
+                bundle.putDouble("Current Longitude", currentLongitude);
+                bundle.putDouble("Current Latitude", currentLatitude);
+                bundle.putSerializable("stationData", (Serializable) stationData);
+                mapsFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().add(R.id.mapsContainer, mapsFragment).commit();
+            }
             updateStationControls();
-            updateLV();
+            updateMainLV();
         }
         if (locationUpdateCounter % 4 == 0){
             updateStationControls();
-            updateLV();
+            updateMainLV();
+            updateMapsFragment();
         }
 
     }
 
-    // Seperate function -> can be called when starting the app
-    public void updateLV(){
-        Log.d(TAG, "Updating List View...");
+    // Updating the main listview
+    public void updateMainLV(){
+        Log.d(TAG, "Updating Main List View...");
         //printStationDataList();
         // Create new temp nearby station data list to pass it to the adapter -> otherwise all the other stops that are not nearby are also shown
         List<StationSample> nearbyStations = new ArrayList<>();
@@ -299,10 +315,22 @@ public class MainActivity extends AppCompatActivity {
                 nearbyStations.add(stationData.get(i));
             }
         }
-        stationDataListView = (ListView) findViewById(R.id.LV_stationData);
-        stationDataAdapter = new StationDataAdapter(this, nearbyStations, MainActivity.this);
-        stationDataListView.setAdapter(stationDataAdapter);
-        stationDataAdapter.notifyDataSetChanged();
+        mainStationDataListView = (ListView) findViewById(R.id.LV_stationData);
+        mainStationDataAdapter = new MainStationDataAdapter(this, nearbyStations, MainActivity.this);
+        mainStationDataListView.setAdapter(mainStationDataAdapter);
+        mainStationDataAdapter.notifyDataSetChanged();
+    }
+
+    // Updates the maps fragment with new data
+    public void updateMapsFragment(){
+        Log.d(TAG, "Updating GMaps Fragment...");
+        Bundle bundle = new Bundle();
+        bundle.putDouble("Current Longitude", currentLongitude);
+        bundle.putDouble("Current Latitude", currentLatitude);
+        bundle.putSerializable("stationData", (Serializable) stationData);
+        mapsFragment.getArguments().putAll(bundle);
+        mapsFragment.updateMapData(false);
+        //getSupportFragmentManager().beginTransaction().detach(mapsFragment).attach(mapsFragment).commit();
     }
 
     //--- Data Functions ---//
@@ -382,25 +410,9 @@ public class MainActivity extends AppCompatActivity {
                         stationData.get(i).setControl(false);
                     }
                 }
-                updateLV();
+                updateMainLV();
             }
         });
-    }
-
-    // --- Debug Functions --- //
-    private void printStationDataList(){
-        Log.d(TAG, "Printing Station Data List... ");
-        for (int i = 0; i < stationData.size(); i++){
-            Log.d(TAG, "In Station Data List: " + stationData.get(i).getStationName());
-            Log.d(TAG, "with distance: " + stationData.get(i).getDistance());
-        }
-    }
-
-    private void printStringList(List<String> stationList){
-        Log.d(TAG, "Printing String List... ");
-        for (int i = 0; i < stationList.size(); i++){
-            Log.d(TAG, "Station in List: " + stationList.get(i));
-        }
     }
 
     //--- Firebase Functions ---//
@@ -481,6 +493,22 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    // --- Debug Functions --- //
+    private void printStationDataList(){
+        Log.d(TAG, "Printing Station Data List... ");
+        for (int i = 0; i < stationData.size(); i++){
+            Log.d(TAG, "In Station Data List: " + stationData.get(i).getStationName());
+            Log.d(TAG, "with distance: " + stationData.get(i).getDistance());
+        }
+    }
+
+    private void printStringList(List<String> stationList){
+        Log.d(TAG, "Printing String List... ");
+        for (int i = 0; i < stationList.size(); i++){
+            Log.d(TAG, "Station in List: " + stationList.get(i));
+        }
     }
 }
 

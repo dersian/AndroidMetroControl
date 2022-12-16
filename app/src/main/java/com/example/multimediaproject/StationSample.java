@@ -1,6 +1,8 @@
 package com.example.multimediaproject;
 
-public class StationSample {
+import java.io.Serializable;
+
+public class StationSample implements Serializable {
     private String stationName;
     private double longitude;
     private double latitude;

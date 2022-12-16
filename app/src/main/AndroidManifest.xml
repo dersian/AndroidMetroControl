@@ -23,7 +23,7 @@
             android:value="AIzaSyDLJpIfQiF9hy7g3BgZoqYmwanapd61aB8" />
 
         <activity
-            android:name="com.example.multimediaproject.AllControlsActivity"
+            android:name="com.example.multimediaproject.AllStationsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -37,7 +37,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.multimediaproject.StationDataListView"
+            android:name="com.example.multimediaproject.MainStationDataListView"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

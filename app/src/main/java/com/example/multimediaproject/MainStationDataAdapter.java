@@ -13,15 +13,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class StationDataAdapter extends BaseAdapter {
-    private static final String TAG = "StationDataAdapter";
+public class MainStationDataAdapter extends BaseAdapter {
+    private static final String TAG = "MainStationDataAdapter";
     private static final int DISTANCE_RADIUS = 500;
 
     Context context;
     private List<StationSample> stationData;
     private MainActivity mainActivity;
 
-    public StationDataAdapter(Context context, List<StationSample> stationData, MainActivity mainActivity){
+    public MainStationDataAdapter(Context context, List<StationSample> stationData, MainActivity mainActivity){
         super();
         this.context = context;
         this.stationData = stationData;
@@ -52,7 +52,7 @@ public class StationDataAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.listview_stationsample, parent, false);
+        view = inflater.inflate(R.layout.listview_main_station_data, parent, false);
 
         TextView TVstationName = (TextView) view.findViewById(R.id.TV_StationSampleName);
         TextView TVstationDistance = (TextView) view.findViewById(R.id.TV_StationSampleDistance);
@@ -91,7 +91,8 @@ public class StationDataAdapter extends BaseAdapter {
                             Log.d(TAG, "Station already in database: " + stationData.get(i).getStationName());
                             stationData.get(i).setControl(true); // if not already set
                         }
-                        mainActivity.updateLV();
+                        mainActivity.updateMapsFragment();
+                        mainActivity.updateMainLV();
                         // disable both buttons when one of them is pressed -> doesn't work yet because the listview is updated when buttons are clicked
                         btnYes.setEnabled(false);
                         btnNo.setEnabled(false);
@@ -115,7 +116,8 @@ public class StationDataAdapter extends BaseAdapter {
                         else{
                             Log.d(TAG, "Station not in database: " + stationData.get(i).getStationName());
                         }
-                        mainActivity.updateLV();
+                        mainActivity.updateMapsFragment();
+                        mainActivity.updateMainLV();
                         // disable both buttons when one of them is pressed
                         btnYes.setEnabled(false);
                         btnNo.setEnabled(false);
