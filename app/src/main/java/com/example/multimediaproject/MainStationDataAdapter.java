@@ -70,6 +70,7 @@ public class MainStationDataAdapter extends BaseAdapter {
         if(stationData.get(i).getControl()){
             // Control -> Warning
             IVstationControl.setImageResource(R.drawable.ic_round_warning_24);
+            mainActivity.updateMapsFragment(); // also update the fragment
         } else{
             // No Control -> Check
             IVstationControl.setImageResource(R.drawable.ic_check);

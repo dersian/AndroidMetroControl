@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -74,6 +75,7 @@ public class ReportControlActivity extends AppCompatActivity {
                         if(!currentControlStationsDB.contains(stationName)){ // not yet in list
                             Log.d(TAG, "Station not yet in database, adding to Database: " + stationName);
                             mainActivity.addToDatabase(currentControlStationDoc, stationName);
+                            Toast.makeText(getApplicationContext(), "Station Added to Database", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Log.d(TAG, "Station already in database: " + stationName);

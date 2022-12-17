@@ -99,10 +99,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mapsFragment = new MapsFragment();
-
         // GMaps services check
         isServicesOK();
+
+        // Create new Maps Fragment Object
+        mapsFragment = new MapsFragment();
 
         //---Location---//
         // Set all properties of LocationRequest
@@ -110,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
         locationRequest.setFastestInterval(1000 * FAST_UPDATE_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
         // Event that is triggered whenever the update interval is met
         locationCallBack = new LocationCallback() {
             @Override
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onLocationResult(locationResult);
                 // save the location
                 //updateUI();
+                updateGPS();
             }
         };
 
@@ -127,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         // Start constant location update when app is launched
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         startLocationUpdates();
-        updateGPS();
 
         // Initialize Stations Data List
         initStationData();
@@ -285,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
         if(locationUpdateCounter == 1){ // on startup
             // GMaps fragment
             if(currentLatitude != 0.0 && currentLongitude != 0.0){
+                Log.d(TAG, "First Launch: Creating bundle and launching fragment...");
                 // First launch
                 Bundle bundle = new Bundle();
                 bundle.putDouble("Current Longitude", currentLongitude);
@@ -330,7 +331,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("stationData", (Serializable) stationData);
         mapsFragment.getArguments().putAll(bundle);
         mapsFragment.updateMapData(false);
-        //getSupportFragmentManager().beginTransaction().detach(mapsFragment).attach(mapsFragment).commit();
     }
 
     //--- Data Functions ---//
@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //--- List Functions ---//
-    // Check the nearby stations -> adds them to the corresponding list
+    // Update the distance of every stationSample in stationData -> relative to current location
     private void updateStationDistance(Location currentLocation){
         Log.d(TAG, "Updating Station Distance...");
         // Loop over List with station objects
