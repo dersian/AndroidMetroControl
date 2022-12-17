@@ -302,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
             updateMainLV();
             updateMapsFragment();
         }
-
     }
 
     // Updating the main listview
