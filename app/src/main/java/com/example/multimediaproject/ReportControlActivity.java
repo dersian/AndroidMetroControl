@@ -32,6 +32,8 @@ public class ReportControlActivity extends AppCompatActivity {
     private List<StationSample> stationData;
     public Map<String, Object> currentControlStationDoc = new HashMap<>();
 
+    private Button btnCallActivity;
+
     Button btnControlSubmit;
     AutoCompleteTextView tvControlStationInput;
 
@@ -43,6 +45,13 @@ public class ReportControlActivity extends AppCompatActivity {
         btnControlSubmit = (Button) findViewById(R.id.btnControleSubmit);
         tvControlStationInput = findViewById(R.id.TextViewControlStation);
 
+        btnCallActivity = (Button) findViewById(R.id.btnGoLeft2);
+        btnCallActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMain();
+            }
+        });
         // Retrieve data
         Intent intent = getIntent();
         stationData = (List<StationSample>) intent.getSerializableExtra("stationData");
@@ -86,6 +95,11 @@ public class ReportControlActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void openMain(){
+        Intent i = new Intent(ReportControlActivity.this, MainActivity.class);
+        startActivity(i);
     }
 
     // Swipe detection

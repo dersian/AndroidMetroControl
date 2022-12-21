@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.AttachedSurfaceControl;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -16,6 +19,7 @@ public class AllStationsActivity extends AppCompatActivity {
     float x1,y1,x2,y2;
     private List<StationSample> stationData;
     private MainActivity mainActivity = new MainActivity();
+    private Button btnCallActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,19 @@ public class AllStationsActivity extends AppCompatActivity {
         AllStationDataAdapter allStationsDataAdapter = new AllStationDataAdapter(this, stationData, mainActivity);
         allStationsDataListView.setAdapter(allStationsDataAdapter);
         allStationsDataAdapter.notifyDataSetChanged();
+        btnCallActivity = (Button) findViewById(R.id.btnGoRight2);
+        btnCallActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMain();
+            }
+        });
     }
 
+    public void openMain(){
+        Intent i = new Intent(AllStationsActivity.this, MainActivity.class);
+        startActivity(i);
+    }
     public boolean onTouchEvent(MotionEvent touchEvent){
         switch(touchEvent.getAction()){
             case MotionEvent.ACTION_DOWN:

@@ -47,8 +47,6 @@ public class MapsFragment extends Fragment {
     private GoogleMap gMap;
     private LatLng currentLatLng;
     private List<StationSample> stationData;
-    private List<String> controlStationsCurrent = new ArrayList<>();
-    private MainActivity mainActivity = new MainActivity();
     private ImageView currentLocationIV;
     private double currentLongitude;
     private double currentLatitude;

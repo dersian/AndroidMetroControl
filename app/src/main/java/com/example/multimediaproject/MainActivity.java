@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int DISTANCE_RADIUS = 500;
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
+
     //--- UI Elements ---//
     private Button btnCallActivity;
     float x1,y1,x2,y2;
@@ -243,8 +244,8 @@ public class MainActivity extends AppCompatActivity {
                     //currentLongitude = location.getLongitude();
                     //currentLatitude = location.getLatitude();
                     // Test Locations:
-                    currentLongitude = 4.5028997;
-                    currentLatitude = 50.8228761;
+                    currentLongitude = 4.396682;
+                    currentLatitude = 50.824280;
                     // Check nearby stations everytime location is updated
                     updateStationDistance(location);
                 }
